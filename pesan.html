@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Send a Message — Fida's Space</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800;900&family=Caveat:wght@600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=3">
+  <link rel="stylesheet" href="pesan.css?v=2">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+<div class="frame">
+
+  <header class="header">
+    <a class="header__brand cell" href="index.php">FIDA'S SPACE</a>
+    <p class="header__desc cell">Personal portfolio<br>profile · experience · gallery</p>
+    <button class="header__toggle" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+    <nav class="header__nav" id="menu" aria-label="Main navigation">
+      <a class="cell" href="index.php">Home</a>
+      <a class="cell" href="pesan.html">Contact</a>
+    </nav>
+    <span class="header__dot cell" aria-hidden="true"><i></i></span>
+  </header>
+
+  <main>
+    <!-- ===== INTRO ===== -->
+    <section class="intro" aria-labelledby="page-title">
+      <div class="intro__main cell">
+        <span class="num">01 — GUESTBOOK</span>
+        <h1 id="page-title" class="intro__title">WORDS<br>FROM YOU.</h1>
+        <p class="intro__script">I'd love to hear from you.</p>
+      </div>
+      <div class="intro__side">
+        <p>Every little message means something. Whether it's a hello, a thought, or just a few random words, there's always room for your note here.</p>
+        <hr class="rule">
+        <p class="small">NO ACCOUNT NEEDED</p>
+        <svg class="badge badge--intro" viewBox="0 0 120 120" aria-hidden="true">
+          <defs><path id="c3" d="M60 60 m-44 0 a44 44 0 1 1 88 0 a44 44 0 1 1 -88 0"/></defs>
+          <circle cx="60" cy="60" r="58" fill="#F2C94C"/>
+          <text><textPath href="#c3">WRITE ME A NOTE · WRITE ME A NOTE ·</textPath></text>
+          <path d="M60 46v28M46 60h28" stroke="#171512" stroke-width="2"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- ===== MESSAGE WALL ===== -->
+    <section class="wall" aria-labelledby="wall-title">
+      <aside class="wall__aside cell">
+        <span class="num">02</span>
+        <h2 id="wall-title" class="sec-title sec-title--sm">WORDS LEFT HERE</h2>
+        <p class="wall__lead">Notes from other visitors, shared after a quick read. Replies appear right underneath.</p>
+        <p class="small" id="wall-count" aria-live="polite"></p>
+      </aside>
+
+      <div class="wall__panel">
+        <p class="wall__state" id="wall-state" role="status">Loading notes…</p>
+        <ol class="wall__list" id="wall-list" hidden></ol>
+        <button class="btn btn--ghost wall__more" id="wall-more" type="button" hidden>LOAD MORE NOTES</button>
+      </div>
+    </section>
+
+    <!-- ===== FORM ===== -->
+    <section class="write" aria-labelledby="form-title">
+      <aside class="write__aside cell">
+        <span class="num">03</span>
+        <h2 id="form-title" class="sec-title sec-title--sm">WRITE IT DOWN</h2>
+        <ul class="write__notes">
+          <li>Name and message are required.</li>
+          <li>Email is optional and never shown publicly.</li>
+          <li>Notes are read first before anything appears on the site.</li>
+        </ul>
+        <p class="hand-note">no pressure,<br>just be you :)</p>
+      </aside>
+
+      <div class="write__panel">
+        <!-- FORM STATE -->
+        <form id="msg-form" action="api/pesan.php" method="post" novalidate>
+          <div class="field">
+            <label for="name">Your Name <span class="req">*</span></label>
+            <input id="name" name="name" type="text" maxlength="100" autocomplete="name" placeholder="What should I call you?" aria-describedby="name-err" required>
+            <p class="err" id="name-err" role="alert"></p>
+          </div>
+
+          <div class="field">
+            <label for="email">Your Email <span class="opt">(optional)</span></label>
+            <input id="email" name="email" type="email" maxlength="100" autocomplete="email" placeholder="Your email (optional)" aria-describedby="email-err">
+            <p class="err" id="email-err" role="alert"></p>
+          </div>
+
+          <div class="field">
+            <label for="message">Your Message <span class="req">*</span></label>
+            <textarea id="message" name="message" rows="8" maxlength="1000" placeholder="Write whatever is on your mind..." aria-describedby="message-err message-count" required></textarea>
+            <div class="field__foot">
+              <p class="err" id="message-err" role="alert"></p>
+              <p class="count" id="message-count"><span id="count-num">0</span> / 1000</p>
+            </div>
+          </div>
+
+          <!-- Honeypot anti-spam: harus tetap kosong -->
+          <div class="hp" aria-hidden="true"><label>Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+
+          <p class="err err--form" id="form-err" role="alert"></p>
+
+          <button class="btn btn--send" id="send-btn" type="submit">
+            <span class="btn__label">SEND MY MESSAGE ↗</span>
+            <span class="btn__loading" aria-hidden="true">SENDING…</span>
+          </button>
+          <p class="write__thanks">Your words are appreciated. Thanks for stopping by!</p>
+        </form>
+
+        <!-- SUCCESS STATE -->
+        <div id="success" class="success" hidden tabindex="-1">
+          <!-- <span class="num">DONE ✓</span> -->
+          <h2 class="success__title">YOUR WORDS HAVE FOUND THEIR WAY.</h2>
+          <p class="success__script">Thank you for the little note!</p>
+          <p class="success__text">Your message has been received. Thank you for taking a moment to leave a piece of your thoughts here. It will be reviewed first, so it may not appear on the site right away.</p>
+          <div class="success__actions">
+            <a class="btn" href="index.php">BACK TO HOME</a>
+            <button class="btn btn--ghost" id="again-btn" type="button">SEND ANOTHER NOTE</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <b class="cell">FIDA'S SPACE</b>
+    <span class="cell footer__tag">MADE WITH CURIOSITY & CARE.</span>
+    <nav class="cell footer__social" aria-label="Social media">
+      <a href="https://www.instagram.com/fidnoi/">Instagram</a><a href="https://github.com/mufida-2421500032/">GitHub</a><a href="mailto:mu4fida@gmail.com">Mufida</a>
+    </nav>
+    <span class="cell footer__copy">© 2026</span>
+  </footer>
+</div>
+<script src="assets/js/main.js" defer></script>
+<script src="assets/js/pesan.js" defer></script>
+<script src="assets/js/wall.js" defer></script>
+</body>
+</html>
